@@ -1,46 +1,224 @@
-# Getting Started with Create React App
+-INSTALL CRA-RKT WITH Eslint airbnb
+https://redux-toolkit.js.org/introduction/getting-started
+==================================
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) TS template.
+https://brygrill.medium.com/create-react-app-with-typescript-eslint-prettier-and-github-actions-f3ce6a571c97
 
-## Available Scripts
+1.
 
-In the project directory, you can run:
+Create React App with TypeScript
+Start a new project with create-react-app and the typescript flag.
 
-### `npm start`
+npx create-react-app my-app --template typescript
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+NPM Packages
+We’ll be adding the following packages:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+@typescript-eslint/eslint-plugin
+@typescript-eslint/parser
+eslint-config-airbnb-typescript
+eslint-config-prettier
+eslint-plugin-import (Airbnb peer)
+eslint-plugin-jest
+eslint-plugin-jsx-a11y (Airbnb peer)
+eslint-plugin-prettier
+eslint-plugin-react (Airbnb peer)
+eslint-plugin-react-hooks (Airbnb peer)
+prettier
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---command without prettier-----------
+npm i -D @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-config-airbnb-typescript eslint-plugin-import eslint-plugin-jest eslint-plugin-jsx-a11y eslint-plugin-react eslint-plugin-react-hooks
 
-### `npm run build`
+---command with prettier-----------
+npm i -D @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-config-airbnb-typescript eslint-plugin-import eslint-plugin-jest eslint-plugin-jsx-a11y eslint-plugin-react eslint-plugin-react-hooks eslint-config-prettier eslint-plugin-prettier prettier
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+----command only with prettier----
+npm i -D  eslint-config-prettier eslint-plugin-prettier prettier
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+!!!! 
+Install the ESLint packages for TypeScript and Jest support. Note, ESLint is installed with create-react-app, so you don’t need to explicitly install it.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+2.
+Then install the packages for Airbnb config. This command will work for Yarn or NPM.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+npx install-peerdeps --dev eslint-config-airbnb
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Update on the above command:
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+For anyone having issues regarding the eslint version, it's due to the fact that the…
+You can install the needed packages for this article with the following command, which won't mess with your dependency…
+medium.com
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+3.
+
+Prettier
+Next, add the packages to integrate ESLint with Prettier rules.
+
+npm i -D prettier eslint-config-prettier eslint-plugin-prettier
+ESLint Config
+
+
+create eslinrc file with 
+
+npm init @eslint/config
+
+and ask the questions !!!!!
+
+
+
+The ESLint config will look something like this:
+---------------
+module.exports = {
+  extends: [
+    'airbnb-typescript',
+    'airbnb/hooks',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:jest/recommended',
+    'plugin:prettier/recommended'
+  ],
+  plugins: ['react', '@typescript-eslint', 'jest'],
+  env: {
+    browser: true,
+    es6: true,
+    jest: true,
+  },
+  globals: {
+    Atomics: 'readonly',
+    SharedArrayBuffer: 'readonly',
+  },
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: 2018,
+    sourceType: 'module',
+    project: './tsconfig.json',
+  },
+  rules: {
+    'linebreak-style': 'off',
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
+   },
+
+  };
+
+-------------------
+4.
+
+Scripts
+Lint and format with these scripts:
+
+"scripts": {
+  "format": "prettier --write src/**/*.ts{,x}",
+  "lint": "tsc --noEmit && eslint src/**/*.ts{,x}"
+}
+
+5.
+ignore files ?
+
+resolved reules sicle =>    import type {Rootstate} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+!!!!!!
+example to satrt multi command in cli
+mkdir typescript-starter && cd typescript-starter && npm init
+!!!!!!
+
+--eslint :
+https://eslint.org/
+
+create config file .eslintrc and ask for questions in command line
+npm init @eslint/config
+
+
+install airbnb config
+https://www.npmjs.com/package/eslint-config-airbnb-typescript
+
+npm i eslint-config-airbnb-typescript
+
+Configure ESLint
+Within your ESLint config file:
+
+extends: [
+  'airbnb',
++ 'airbnb-typescript'
+]
+
+4) Configure the ESLint TypeScript parser
+This config requires knowledge of your TypeScript config.
+
+In your ESLint config, set parserOptions.project to the path of your tsconfig.json.
+
+For example:
+
+{
+  extends: ['airbnb', 'airbnb-typescript'],
++ parserOptions: {
++   project: './tsconfig.json'
++ }
+}
+
+
+
+
+---- ????
+
+Установите расширение ESLint VS Code.
+
+Создайте новую папку .vscodeв корне вашего проекта. Теперь вы можете отредактировать файл конфигурации настроек рабочего пространства .vscode/settings.json, чтобы ESLint автоматически исправлял устранимые проблемы при сохранении:
+
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+}
+
+-------
+
+check the formant and lin and create prettierrc file in root of project
+alsi add or disabel rules in .eslintrc file 
+
+read error and resolve this not make rule false..
+
+???    ignore file fo eslint and prettier
+
+ update plugins if created CRA !!!! npm i
+
+
+
+
+
+
+
