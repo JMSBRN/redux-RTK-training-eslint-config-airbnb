@@ -3,6 +3,8 @@ import { useAppDispatch, useAppSelector } from './app/appHooks';
 import Button from './components/button/Button';
 import Clock from './components/clock/Clock';
 import ClockFuncCp from './components/clock/ClockFuncCp';
+import Form from './components/form/Form';
+import MyForm from './components/form/FormFuncCp';
 import User from './components/user/User';
 import { selectUser, setUser } from './features/user/userSlice';
 
@@ -11,6 +13,7 @@ const App = () => {
   const dispatch = useAppDispatch();
   return (
     <div className="App">
+      <Form />
       <Clock />
       <ClockFuncCp />
       <User user={user} />
@@ -18,6 +21,7 @@ const App = () => {
         onClick={() => dispatch(setUser({ name: 'user', email: 'email' }))}
         text="button"
       />
+      <MyForm />
     </div>
   );
 };
